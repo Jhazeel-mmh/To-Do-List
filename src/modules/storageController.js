@@ -41,7 +41,7 @@ class StorageController{
         if (result){
             parsedResult = JSON.parse(result);
         }
-        finalResult = parsedResult.map(todo =>  createTodo(todo.task, todo.done, todo.priority, todo.date, todo.category, todo.id));
+        finalResult = parsedResult.map(todo =>  createTodo(todo.task, todo.done, todo.notes, todo.priority, todo.date, todo.category, todo.id));
         finalResult.sort((a, b) => a.id - b.id);
         this.todos = finalResult;
     }

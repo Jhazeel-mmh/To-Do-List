@@ -1,7 +1,8 @@
 class Todo {
-    constructor(task, done = false, priority = null, date = new Date(), category = "", id = null){
+    constructor(task, done = false, notes = "", priority = null, date = new Date(), category = "", id = null){
         this.task = task;
         this.done = done;
+        this.notes = notes;
         this.priority = priority;
         this.date = date;
         this.category = category;
