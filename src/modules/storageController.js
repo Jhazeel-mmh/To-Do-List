@@ -1,4 +1,5 @@
 import { createTodo } from "./createTodo";
+import { Todo } from "./todo";
 
 class StorageController{
     constructor(){
@@ -47,6 +48,10 @@ class StorageController{
 
     clearTodosFromLocarStorage(arg = "todoList"){
         localStorage.removeItem(arg);
+    }
+
+    getTodo(id){
+        return this.todos.find(todo => todo.id === id && todo instanceof Todo);
     }
 }
 
