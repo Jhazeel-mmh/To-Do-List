@@ -63,12 +63,14 @@ svg {
     text-align: start;
     border: none;
     background-color: none;
+    padding: 10px 0;
 }
 
 .main-nav p {
     display: flex;
     gap: 1rem;
     justify-content: start;
+    align-items: center;
     padding: 0 1.5rem;
 }
 
