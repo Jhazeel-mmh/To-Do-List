@@ -3,8 +3,10 @@ import "./style.css";
 import { Todo } from "./modules/todo";
 import { StorageController } from "./modules/storageController";
 import { createTodo } from "./modules/createTodo";
+import { DOMController } from "./modules/DOMController";                                                                                                            
 
 const c = new StorageController();
+const dom = new DOMController();
 c.loadFromLocalStore()
 
 /*
@@ -17,4 +19,7 @@ c.addTodo(createTodo("Wash my aaa"));
 
 */
 
+dom.showTasks(c.todos);
+
 console.log((c.todos));
+
