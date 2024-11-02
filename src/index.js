@@ -21,5 +21,8 @@ c.addTodo(createTodo("Wash my aaa"));
 
 dom.showTasks(c.todos);
 
+
+dom.displayFormOfTodo();
+
 console.log((c.todos));
 

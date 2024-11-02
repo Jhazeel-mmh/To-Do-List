@@ -5,6 +5,11 @@ class DOMController {
         this.categorys = [];
     }
 
+    // todo: addthe add function to display a form that adds a div. Remember to get the categorys from all the task and display them in a select input
+    // probably you gotta add some other function in the storageController
+    
+
+
     showTasks(list){
         let mainDiv = $(".main");
         list.forEach(todo => {
@@ -17,7 +22,7 @@ class DOMController {
         });
     }
 
-    showCategory(list){
+    displayCategorysNav(list){
         let categoryNav = $(".category-nav");
         list.forEach(c => {
             let btn = c$("button", "category-item", c)
@@ -26,41 +31,71 @@ class DOMController {
         });
     }
 
-    showTodoDetails(todo){
-        let div = c$("div", "details", "details-" + todo.id);
-        let prioritySelectedElement = this.determineSelectedByPriority(todo.priority);
+    displayFormOfTodo(todo = false, list = undefined){
+        let div = c$("div", "details-form");
+        let prioritySelectedElement;
+        if (todo){
+            prioritySelectedElement = this.determineSelectedByPriority(todo.priority);
+            div.id = "details-" + todo.id;
+        } else {
+            prioritySelectedElement = this.determineSelectedByPriority()
+        }
+       
         div.innerHTML = `
-            <button class="close-details-btn">X</button>
-            <h3 class="todo-task">${todo.task}</h3>
-            <p class="todo-notes">${todo.notes}</p>
-            <div class="todo-buttons">
-                <p>
-                    <label for="taskPriority">Prioridad:</label>
-                    <select id="taskPriority" name="priority">
-                        ${prioritySelectedElement}
-                    </select>
-                </p>
-                <p>
-                    <label for="todo-date">Date:</label>
-                    <input type="date" name="date" id="todo-date" value="${todo.date}">
-                </p>
-                <p>
-                    <label for="todo-category">Category: </label>
-                    <input type="text" value="${todo.category}" id="todo-category">
-                </p>
-            </div>
+            <form id="add-task-form">
+                <button class="close-details-btn">X</button>
+                <div class="todo-inputs">
+                    <p id="todo-wrapper">
+                        <input id="todo-task" value="${todo.task ? todo.task : ""}">
+                    </p>
+                    <p id="notes-wrapper">
+                        <textarea id="todo-notes">${todo.notes ? todo.notes : ""}</textarea>    
+                    </p>
+                    <p id="priority-wrapper">
+                        <label for="taskPriority">Priority:</label>
+                        <select id="taskPriority" name="priority">
+                            ${prioritySelectedElement}
+                        </select>
+                    </p>
+                    <p id="date-wrapper">
+                        <label for="todo-date">Date:</label>
+                        <input type="date" name="date" id="todo-date" value="${todo ? this.displayDateOfTodo(todo) : ""}">
+                    </p>
+                    <p id="category-wrapper">
+                        <label for="todo-category">Category: </label>
+                        ${this.displayCategoryInput(todo.category ? todo.category : "")}
+                        ${this.displayCategoryDatalist(list)};
+                    </p>
+                    <p id="submit-wrapper">
+                        <input type="submit" value="Save" id="submitform">
+                    </p> 
+                </div>
+            </form>
         `
         document.body.appendChild(div);
         this.closeDetailsDiv(div);
-        this.setDateofTodo(todo);
-
     }   
 
-    setDateofTodo(todo){
-        let inputDate = $('#todo-date');
+    displayCategoryInput(value){
+        let categoryInput = c$("input", "ci","todo-category");
+        categoryInput.type = "text";
+        categoryInput.value = value;
+        categoryInput.setAttribute("list", "categoryList");
+        return categoryInput.outerHTML;
+    }
+
+    displayCategoryDatalist(list){
+        let datalist = c$("datalist", "datalist", "categoryList");
+        if (list){
+            datalist.innerHTML = list.map(category => `<option value="${category}">`).join("");
+        }
+        return datalist.outerHTML;
+    }
+
+    displayDateOfTodo(todo){
         let date = todo.date;
         const formattedDate = date.toISOString().split('T')[0]; // Formato "YYYY-MM-DD"
-        inputDate.value = formattedDate;
+        return formattedDate;
     }
 
     closeDetailsDiv(element){
