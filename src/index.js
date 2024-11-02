@@ -19,10 +19,11 @@ c.addTodo(createTodo("Wash my aaa"));
 
 */
 
+dom.updateCategorys(c.getCategorys())
 dom.showTasks(c.todos);
 
 
-dom.displayFormOfTodo();
+dom.displayFormOfTodo(c.todos[7]);
 
 console.log((c.todos));
 

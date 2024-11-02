@@ -6,6 +6,12 @@ class StorageController{
         this.todos = [];
     }
 
+    getCategorys(){
+        const categorys = new Set();
+        this.todos.forEach(todo => todo.category ? categorys.add(todo.category) : "");
+        return Array.from(categorys);
+    }
+
     updateIds(){
         this.todos.forEach((todo, index) => todo.id = index);
     }

@@ -5,11 +5,15 @@ class DOMController {
         this.categorys = [];
     }
 
+    updateCategorys(list){
+        this.categorys = list;
+    }
     // todo: addthe add function to display a form that adds a div. Remember to get the categorys from all the task and display them in a select input
-    // probably you gotta add some other function in the storageController
-    
+    // probably you gotta add some other function in the storageController 
+    // DONE, I UPDATE THE IMPLEMENTATION OF displayFormOfTodo() TO USE IN CASE OF ADD/SHOW A TODO 
 
 
+    // ADD A ID TO THE TASK DIV TO IMPROVE THE JS DELEGATION EVENT WHEN SOMEONE CLICKS  IN THE TODO TO SHOW HIS INFO
     showTasks(list){
         let mainDiv = $(".main");
         list.forEach(todo => {
@@ -31,7 +35,7 @@ class DOMController {
         });
     }
 
-    displayFormOfTodo(todo = false, list = undefined){
+    displayFormOfTodo(todo = false){
         let div = c$("div", "details-form");
         let prioritySelectedElement;
         if (todo){
@@ -64,7 +68,7 @@ class DOMController {
                     <p id="category-wrapper">
                         <label for="todo-category">Category: </label>
                         ${this.displayCategoryInput(todo.category ? todo.category : "")}
-                        ${this.displayCategoryDatalist(list)};
+                        ${this.displayCategoryDatalist(this.categorys)}
                     </p>
                     <p id="submit-wrapper">
                         <input type="submit" value="Save" id="submitform">
