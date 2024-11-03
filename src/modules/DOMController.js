@@ -37,7 +37,7 @@ class DOMController {
     }
 
     displayFormOfTodo(todo = false){
-        let div = c$("div", "details-form");
+        let div = c$("div", "details-form", "details-form");
         let prioritySelectedElement;
         if (todo){
             prioritySelectedElement = this.determineSelectedByPriority(todo.priority);
@@ -110,9 +110,10 @@ class DOMController {
         return formattedDate;
     }
 
-    closeDetailsDiv(element){
+    closeDetailsDiv(){
         let closeBtn = $(".close-details-btn");
-        closeBtn.addEventListener("click", () => document.removeChild(element));
+        let div = $(".details-form");
+        closeBtn.addEventListener("click", () => document.removeChild(div));
     }
 
     determineSelectedByPriority(priority){
