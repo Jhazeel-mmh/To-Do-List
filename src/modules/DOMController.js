@@ -111,27 +111,27 @@ class DOMController {
         switch (priority) {
             case 3:
                 return `
-                    <option value="low">low</option>
-                    <option value="medium">medium</option>
-                    <option value="high" selected>high</option>
+                    <option value="1">low</option>
+                    <option value="2">medium</option>
+                    <option value="3" selected>high</option>
                 `;
             case 2:
                 return `
-                    <option value="low">low</option>
-                    <option value="medium" selected>medium</option>
-                    <option value="high">high</option>
+                    <option value="1">low</option>
+                    <option value="2" selected>medium</option>
+                    <option value="3">high</option>
                 `;
             case 1:
                 return `
-                    <option value="low" selected>low</option>
-                    <option value="medium">medium</option>
-                    <option value="high">high</option>
+                    <option value="1" selected>low</option>
+                    <option value="2">medium</option>
+                    <option value="3">high</option>
                 `;
             default:
                 return `
-                    <option value="low">low</option>
-                    <option value="medium">medium</option>
-                    <option value="high">high</option>
+                    <option value="1">low</option>
+                    <option value="2">medium</option>
+                    <option value="3">high</option>
                 `;
         }
     }
