@@ -10,20 +10,14 @@ const c = new StorageController();
 const dom = new DOMController();
 c.loadFromLocalStore()
 
-/*
-c.addTodo(createTodo("Wash my theet"));
-c.addTodo(createTodo("Wash my a"));
-c.addTodo(createTodo("Wash my ass"));
-c.addTodo(createTodo("Wash my feet"));
-c.addTodo(createTodo("Wash my aaa"));
 
-
-*/
 
 dom.updateCategorys(c.getCategorys())
+dom.displayCategorysNav();
+console.log(c.getCategorys());
+
 dom.showTasks(c.todos);
 
-dom.displayFormOfTodo(c.todos[16]);
 
 console.log((c.todos));
 

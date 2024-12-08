@@ -27,11 +27,12 @@ class DOMController {
         });
     }
 
-    displayCategorysNav(list){
+    displayCategorysNav(list = this.categorys){
         let categoryNav = $(".category-nav");
         list.forEach(c => {
             let btn = c$("button", "category-item", c)
             btn.value = c;
+            btn.textContent = c;
             categoryNav.appendChild(btn);
         });
     }
@@ -45,8 +46,6 @@ class DOMController {
         } else {
             prioritySelectedElement = this.determineSelectedByPriority()
         }
-
-        // TODO add some btns to remove  a todo
        
         div.innerHTML = `
             <form id="add-task-form">
@@ -113,7 +112,10 @@ class DOMController {
     closeDetailsDiv(){
         let closeBtn = $(".close-details-btn");
         let div = $(".details-form");
-        closeBtn.addEventListener("click", () => document.removeChild(div));
+        closeBtn.addEventListener("click", () => {
+            const body = $("body");
+            body.removeChild(div); 
+        });
     }
 
     determineSelectedByPriority(priority){
