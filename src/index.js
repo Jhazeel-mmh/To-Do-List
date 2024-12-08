@@ -6,25 +6,11 @@ import { createTodo } from "./modules/createTodo";
 import { DOMController } from "./modules/DOMController";
 import { $, $$} from "./modules/DOMManipulationFunctions";                                                                                            
 
-const c = new StorageController();
-const dom = new DOMController();
-c.loadFromLocalStore()
-
-
-
-dom.updateCategorys(c.getCategorys())
-dom.displayCategorysNav();
-console.log(c.getCategorys());
-
-dom.showTasks(c.todos);
-
-
-console.log((c.todos));
 
 const App = (function (DOM, StrgCtrl){
 
     StrgCtrl.loadFromLocalStore();
-
+    DOM.showTasks(StrgCtrl.todos);
 
     const addEventListenerToDisplayForm = () => {
         let addTodoBtn = $("#add-task-btn");
@@ -32,30 +18,36 @@ const App = (function (DOM, StrgCtrl){
         if (!addTodoBtn) return;
 
         addTodoBtn.addEventListener("click", () => {
-            DOM.displayFormOfTodo();
+            const form = $("#details-form");
+            if (!form) DOM.displayFormOfTodo();
             blockClicksOutsideForm();
             addEventListenerOfAddTodo();
         });
     };
 
     const addEventListenerOfAddTodo = () => {
-        let form = $(".details-form");
+        let form = $("#add-task-form");
         form.addEventListener("submit", event => {
             event.preventDefault()
             addTodo();
+            DOM.showTasks(StrgCtrl.todos);
         });
     };
 
     const addTodo = () => {
-        let task = $("#todo-task").value;
-        let done = $("#todo-check").value;
-        let notes = $("#todo-notes").value;
-        let priority = $("#todo-priority").value;
-        let date = $("#todo-date").value;
-        let category = $("#todo-category").value;
+        let task = $("#todo-task")?.value || ""; // Encadenamiento opcional para evitar errores
+        let done = $("#todo-check")?.checked || false; // Booleano para checkbox
+        let notes = $("#todo-notes")?.value || "";
+        let priority = $("#todo-priority")?.value || "";
+        let date = $("#todo-date")?.value || "";
+        let category = $("#todo-category")?.value || "";
 
+
+        if (!task) return;
+        
         StrgCtrl.addTodo(createTodo(task, done, notes, priority, date, category));
-        DOM.closeDetailsDiv();
+        console.log(StrgCtrl.todos);
+        ;
     };
 
     const blockClicksOutsideForm = () => {
@@ -70,6 +62,5 @@ const App = (function (DOM, StrgCtrl){
 
     // add a function that enables remove a todo and add elements to the form to delete the actual todo
 
-    
     addEventListenerToDisplayForm();
 })(new DOMController(), new StorageController());

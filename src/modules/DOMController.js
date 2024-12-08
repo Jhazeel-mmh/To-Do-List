@@ -16,6 +16,7 @@ class DOMController {
 
     showTasks(list){
         let mainDiv = $(".main");
+        mainDiv.textContent = "";
         list.forEach(todo => {
             let task = c$("div", "task-item")
             task.innerHTML = `
@@ -39,18 +40,20 @@ class DOMController {
 
     displayFormOfTodo(todo = false){
         let div = c$("div", "details-form", "details-form");
-        let prioritySelectedElement;
+        let prioritySelectedElement, removeBtn;
         if (todo){
             prioritySelectedElement = this.determineSelectedByPriority(todo.priority);
             div.id = "details-" + todo.id;
+            removeBtn = '<button class="remove-todo-btn">Remove</button>';
         } else {
-            prioritySelectedElement = this.determineSelectedByPriority()
+            prioritySelectedElement = this.determineSelectedByPriority();
+            removeBtn = "";
         }
        
         div.innerHTML = `
             <form id="add-task-form">
                 <button class="close-details-btn">X</button>
-                <button class="remove-todo-btn">Remove</button>
+                ${removeBtn}
                 <div class="todo-inputs">
                     <p id="todo-wrapper">
                         <input id="todo-task" value="${todo.task ? todo.task : ""}">
@@ -75,7 +78,7 @@ class DOMController {
                     </p>
                     <p id="check-wrapper">
                         <label for="todo-check">Done:</label>
-                        <input type="checkbox" ${todo.done ? "checked" : ""} id="todo-check>
+                        <input type="checkbox" ${todo.done ? "checked" : ""} id="todo-check">
                     </p>
                     <p id="submit-wrapper">
                         <input type="submit" value="Save" id="submitform">

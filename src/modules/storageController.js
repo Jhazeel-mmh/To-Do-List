@@ -46,6 +46,8 @@ class StorageController{
         let parsedResult, finalResult = [];
         if (result){
             parsedResult = JSON.parse(result);
+        } else {
+            return;
         }
         finalResult = parsedResult.map(todo =>  createTodo(todo.task, todo.done, todo.notes, todo.priority, todo.date, todo.category, todo.id));
         finalResult.sort((a, b) => a.id - b.id);
