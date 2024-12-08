@@ -11,9 +11,10 @@ const App = (function (DOM, StrgCtrl){
 
     StrgCtrl.loadFromLocalStore();
     DOM.showTasks(StrgCtrl.todos);
+    
 
     const addEventListenerToDisplayForm = () => {
-        let addTodoBtn = $("#add-task-btn");
+        let addTodoBtn = $(".add-task");
 
         if (!addTodoBtn) return;
 
@@ -60,7 +61,25 @@ const App = (function (DOM, StrgCtrl){
         });
     };
 
-    // add a function that enables remove a todo and add elements to the form to delete the actual todo
+    const filterTodos = () => {
+        const section = $(".main-sections");
+        const options = $$(".section-option");
 
+        section.addEventListener("click", (event) => {
+            if(event.target.classList.contains("show-todo")){
+                DOM.showTasks(StrgCtrl.getUndoneTodos());
+            }
+            if(event.target.classList.contains("show-done")){
+                DOM.showTasks(StrgCtrl.getDoneTodos());
+            }
+            if(event.target.classList.contains("show-all")){
+                DOM.showTasks(StrgCtrl.todos);
+            }
+
+            DOM.toggleClassesBetweenElements(event.target, options,"clicked");
+        });
+    }; 
+
+    filterTodos();
     addEventListenerToDisplayForm();
 })(new DOMController(), new StorageController());

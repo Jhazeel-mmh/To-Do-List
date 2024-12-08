@@ -61,6 +61,16 @@ class StorageController{
     getTodo(id){
         return this.todos.find(todo => todo.id === id && todo instanceof Todo);
     }
+
+    getUndoneTodos(){
+        return this.todos.filter(todo => todo.done === false);
+    }
+
+    getDoneTodos(){
+        return this.todos.filter(todo => todo.done === true);
+    }
+
+
 }
 
 export { StorageController };

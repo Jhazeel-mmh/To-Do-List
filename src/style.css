@@ -7,7 +7,7 @@
     --fs-300: 1rem;
     --fs-700: 2.5rem;
     --clr-neutral-100: #fff;
-    --clr-neutral-300: #aaa8a8;
+    --clr-neutral-300: #e6e6e6;
     --clr-neutral-500: #6d6c6c;
     --clr-neutral-700: #000000;
     --clr-primary-700: ;
@@ -74,6 +74,37 @@ svg {
 }
 
 .main {
+    display: flex;
+    flex-flow: column nowrap;
     padding: 3rem;
-    flex-flow: column;
+    box-shadow: 1px 1px 1rem;
+    gap: 1rem;
+}
+
+.main-sections {
+    display: flex;
+    padding-bottom: 1rem;
+    gap: 3rem;
+    border-bottom: solid var(--clr-neutral-500) 1px;
+}
+
+.main-sections button {
+    padding: 1rem 5rem;
+    flex: 1;
+    border: none;
+    background-color: var(--clr-neutral-100);
+}
+
+.main-sections button.clicked {
+    background-color: var(--clr-neutral-300);
+}
+
+.task-item {
+    display: flex;
+    gap: 1rem;
+}
+
+.todo-checkbox {
+    width: 1rem;
+    height: auto;
 }

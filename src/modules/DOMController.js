@@ -15,7 +15,7 @@ class DOMController {
     // ADD A ID TO THE TASK DIV TO IMPROVE THE JS DELEGATION EVENT WHEN SOMEONE CLICKS  IN THE TODO TO SHOW HIS INFO
 
     showTasks(list){
-        let mainDiv = $(".main");
+        let mainDiv = $(".main-todo-board");
         mainDiv.textContent = "";
         list.forEach(todo => {
             let task = c$("div", "task-item")
@@ -150,6 +150,17 @@ class DOMController {
         }
     }
 
+    toggleClassesBetweenElements(target, nodes, cls){
+        if (!(target && nodes && cls)) return;
+
+        nodes.forEach(node => {
+            if (node === target){
+                target.classList.add(cls);
+            } else {
+                node.classList.remove(cls);
+            }
+        });       
+    }
 }   
 
 export { DOMController };
