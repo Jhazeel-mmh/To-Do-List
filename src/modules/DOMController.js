@@ -40,6 +40,7 @@ class DOMController {
 
     displayFormOfTodo(todo = false){
         let div = c$("div", "details-form", "details-form");
+        div.classList.add("backdrop");
         let prioritySelectedElement, removeBtn;
         if (todo){
             prioritySelectedElement = this.determineSelectedByPriority(todo.priority);
@@ -51,7 +52,7 @@ class DOMController {
         }
        
         div.innerHTML = `
-            <form id="add-task-form">
+            <form id="add-task-form" class="modal">
                 <button class="close-details-btn">X</button>
                 ${removeBtn}
                 <div class="todo-inputs">

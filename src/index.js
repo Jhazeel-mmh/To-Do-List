@@ -26,7 +26,7 @@ const App = (function (DOM, StrgCtrl){
         if (!form) DOM.displayFormOfTodo(todo);
         // blockClicksOutsideForm();
         addEventListenerToRemoveTodo(idOfTodo);
-        addEventListenerOfAddTodo();
+        addEventListenerOfAddTodo(idOfTodo);
     };
 
     const addEventListenerToRemoveTodo = (id) => { 
@@ -41,11 +41,12 @@ const App = (function (DOM, StrgCtrl){
     };
     
 
-    const addEventListenerOfAddTodo = () => {
+    const addEventListenerOfAddTodo = (id) => {
         let form = $("#add-task-form");
         form.addEventListener("submit", event => {
             event.preventDefault()
             addTodo();
+            StrgCtrl.removeTodo(id);
             DOM.removeClassFromNodes("clicked", $$(".section-option"));
             DOM.closeDetailsDiv();
             DOM.showTasks(StrgCtrl.todos);
