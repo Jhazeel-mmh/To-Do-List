@@ -59,7 +59,7 @@ class StorageController{
     }
 
     getTodo(id){
-        return this.todos.find(todo => todo.id === id && todo instanceof Todo);
+        return this.todos[id];
     }
 
     getUndoneTodos(){

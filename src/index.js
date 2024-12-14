@@ -31,6 +31,7 @@ const App = (function (DOM, StrgCtrl){
         form.addEventListener("submit", event => {
             event.preventDefault()
             addTodo();
+            DOM.closeDetailsDiv();
             DOM.showTasks(StrgCtrl.todos);
         });
     };
@@ -80,6 +81,23 @@ const App = (function (DOM, StrgCtrl){
         });
     }; 
 
+    const updateStatusOfTheTodos = () => {
+        const todosBoard = $(".main-todo-board");
+        todosBoard.addEventListener("click", (event) => {
+            let target = event.target;
+            if (target.classList.contains("todo-checkbox")){
+                StrgCtrl.todos[target.id].done = !StrgCtrl.todos[target.id].done;
+                DOM.showTasks(StrgCtrl.todos);
+            } else if (target.classList.contains("todo-item-todo")){
+                let parent = target.parentElement;
+                let idOFTodo = parent.id.replace("todo-id-", "");
+                let todo = StrgCtrl.getTodo(idOFTodo);
+                DOM.displayFormOfTodo(todo);
+            }
+        });
+    };
+
+    updateStatusOfTheTodos();
     filterTodos();
     addEventListenerToDisplayForm();
 })(new DOMController(), new StorageController());

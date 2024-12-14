@@ -86,8 +86,10 @@ class DOMController {
                 </div>
             </form>
         `
+
         document.body.appendChild(div);
-        this.closeDetailsDiv(div);
+        const btnOfClose = $(".close-details-btn");
+        btnOfClose.addEventListener("click", this.closeDetailsDiv);
     }   
 
     displayCategoryInput(value){
@@ -113,12 +115,9 @@ class DOMController {
     }
 
     closeDetailsDiv(){
-        let closeBtn = $(".close-details-btn");
         let div = $(".details-form");
-        closeBtn.addEventListener("click", () => {
-            const body = $("body");
-            body.removeChild(div); 
-        });
+        const body = $("body");
+        body.removeChild(div); 
     }
 
     determineSelectedByPriority(priority){
