@@ -13,24 +13,40 @@ const App = (function (DOM, StrgCtrl){
     DOM.showTasks(StrgCtrl.todos);
     
 
-    const addEventListenerToDisplayForm = () => {
+    const addEventListenerToBtnAdd = () => {
         let addTodoBtn = $(".add-task");
 
         if (!addTodoBtn) return;
 
-        addTodoBtn.addEventListener("click", () => {
-            const form = $("#details-form");
-            if (!form) DOM.displayFormOfTodo();
-            blockClicksOutsideForm();
-            addEventListenerOfAddTodo();
+        addTodoBtn.addEventListener("click", formController);
+    };
+
+    const formController = (idOfTodo = undefined, todo = undefined) => {
+        const form = $(".details-form");
+        if (!form) DOM.displayFormOfTodo(todo);
+        // blockClicksOutsideForm();
+        addEventListenerToRemoveTodo(idOfTodo);
+        addEventListenerOfAddTodo();
+    };
+
+    const addEventListenerToRemoveTodo = (id) => { 
+        let btnClose = $(".remove-todo-btn");  
+        if (!btnClose) return;
+        btnClose.addEventListener("click", () => {
+            StrgCtrl.removeTodo(id);
+            DOM.removeClassFromNodes("clicked", $$(".section-option"));
+            DOM.closeDetailsDiv();
+            DOM.showTasks(StrgCtrl.todos);
         });
     };
+    
 
     const addEventListenerOfAddTodo = () => {
         let form = $("#add-task-form");
         form.addEventListener("submit", event => {
             event.preventDefault()
             addTodo();
+            DOM.removeClassFromNodes("clicked", $$(".section-option"));
             DOM.closeDetailsDiv();
             DOM.showTasks(StrgCtrl.todos);
         });
@@ -52,34 +68,46 @@ const App = (function (DOM, StrgCtrl){
         ;
     };
 
+    /*
     const blockClicksOutsideForm = () => {
-        const form = $("#details-form");
+        let form = $("#details-form");
         document.body.addEventListener("click", event => {
             if(!form.contains(event.target)){
                 event.stopPropagation();
                 event.preventDefault();
             }
         });
-    };
+    };*/
 
-    const filterTodos = () => {
+    const filterTodosHandler = () => {
         const section = $(".main-sections");
         const options = $$(".section-option");
 
         section.addEventListener("click", (event) => {
-            if(event.target.classList.contains("show-todo")){
-                DOM.showTasks(StrgCtrl.getUndoneTodos());
-            }
-            if(event.target.classList.contains("show-done")){
-                DOM.showTasks(StrgCtrl.getDoneTodos());
-            }
-            if(event.target.classList.contains("show-all")){
-                DOM.showTasks(StrgCtrl.todos);
-            }
-
+            let classes = event.target.classList;
+            let arrayOfClasses = Array.from(classes);
+            let optionToRender = arrayOfClasses.filter(classe => classe.startsWith("show-")).join();
+            filterTodos(optionToRender);
             DOM.toggleClassesBetweenElements(event.target, options,"clicked");
         });
     }; 
+
+    const filterTodos = (key) => {
+        switch (key) {
+            case "show-todo":
+                DOM.showTasks(StrgCtrl.getUndoneTodos());
+                break;
+            case "show-done":
+                DOM.showTasks(StrgCtrl.getDoneTodos());
+                break;
+            case "show-all":
+                DOM.showTasks(StrgCtrl.todos);
+                break;
+            default:
+                DOM.showTasks(StrgCtrl.todos);
+                break;
+        }
+    };
 
     const updateStatusOfTheTodos = () => {
         const todosBoard = $(".main-todo-board");
@@ -92,12 +120,13 @@ const App = (function (DOM, StrgCtrl){
                 let parent = target.parentElement;
                 let idOFTodo = parent.id.replace("todo-id-", "");
                 let todo = StrgCtrl.getTodo(idOFTodo);
-                DOM.displayFormOfTodo(todo);
+                formController(idOFTodo, todo);
             }
         });
     };
 
+
     updateStatusOfTheTodos();
-    filterTodos();
-    addEventListenerToDisplayForm();
+    filterTodosHandler();
+    addEventListenerToBtnAdd();
 })(new DOMController(), new StorageController());

@@ -69,7 +69,7 @@ class DOMController {
                     </p>
                     <p id="date-wrapper">
                         <label for="todo-date">Date:</label>
-                        <input type="date" name="date" id="todo-date" value="${todo ? this.displayDateOfTodo(todo) : ""}">
+                        <input type="date" name="date" id="todo-date" value="${todo ? this.displayDateOfTodo(todo) : "" }">
                     </p>
                     <p id="category-wrapper">
                         <label for="todo-category">Category: </label>
@@ -110,6 +110,7 @@ class DOMController {
 
     displayDateOfTodo(todo){
         let date = todo.date;
+        if (!date) return;
         const formattedDate = date.toISOString().split('T')[0]; // Formato "YYYY-MM-DD"
         return formattedDate;
     }
@@ -159,6 +160,14 @@ class DOMController {
                 node.classList.remove(cls);
             }
         });       
+    }
+
+    removeClassFromNodes(cls, nodes){
+        nodes.forEach(option => {
+            if (option.classList.contains(cls)){
+                option.classList.remove(cls);
+            }
+        });
     }
 }   
 
