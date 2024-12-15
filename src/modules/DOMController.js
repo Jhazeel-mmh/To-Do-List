@@ -57,10 +57,10 @@ class DOMController {
                 ${removeBtn}
                 <div class="todo-inputs">
                     <p id="todo-wrapper">
-                        <input id="todo-task" value="${todo.task ? todo.task : ""}">
+                        <input id="todo-task" placeholder="Task" value="${todo.task ? todo.task : ""}">
                     </p>
                     <p id="notes-wrapper">
-                        <textarea id="todo-notes">${todo.notes ? todo.notes : ""}</textarea>    
+                        <textarea id="todo-notes" placeholder="Notes">${todo.notes ? todo.notes : ""}</textarea>    
                     </p>
                     <p id="priority-wrapper">
                         <label for="todo-priority">Priority:</label>
@@ -74,7 +74,7 @@ class DOMController {
                     </p>
                     <p id="category-wrapper">
                         <label for="todo-category">Category: </label>
-                        ${this.displayCategoryInput(todo.category ? todo.category : "")}
+                        <input type="text" value="${todo.category}" list="categoryList" id="todo-category">
                         ${this.displayCategoryDatalist(this.categorys)}
                     </p>
                     <p id="check-wrapper">
@@ -96,7 +96,7 @@ class DOMController {
     displayCategoryInput(value){
         let categoryInput = c$("input", "ci","todo-category");
         categoryInput.type = "text";
-        categoryInput.value = value;
+        categoryInput.textContent = value;
         categoryInput.setAttribute("list", "categoryList");
         return categoryInput.outerHTML;
     }

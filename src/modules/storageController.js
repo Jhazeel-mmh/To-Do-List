@@ -28,14 +28,10 @@ class StorageController{
 
     // usar el atributo id del todo en todos en vez de splice.
     removeTodo(id){
-        let provedId;
-        this.todos.forEach(todo => {
-            if (id === todo.id){
-                provedId = id;
-                
-            }
-        });
-        this.todos.splice(provedId, 1);
+        if (!id) return;
+        if (id > this.todos.length - 1) return;
+        
+        this.todos.splice(id,1);
         this.updateIds();
         this.saveInLocalStorage();
     }

@@ -62,16 +62,24 @@ svg {
 .main-nav  button, .category-nav  button {
     text-align: start;
     border: none;
-    background-color: none;
+    background-color: var(--clr-neutral-100);
     padding: 10px 0;
+    transition: transform 1s ease;
+}
+
+.main-nav  p:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4); /* Aumenta la sombra */
 }
 
 .main-nav p {
+    width: 95%;
     display: flex;
     gap: 1rem;
     justify-content: start;
     align-items: center;
     padding: 0 1.5rem;
+    transition: 1s ease transform;
 }
 
 .main {
@@ -137,6 +145,22 @@ svg {
 .close-details-btn {
     width: 2rem;
     height: auto;
+    border: none;
+    background-color: var(--clr-neutral-100);
+    font-weight: var(--fw-bold);
+    transition: transform ease 1s;
+}
+
+.close-details-btn:hover {
+    transform: scale(1.3);
+    color: var(--clr-neutral-500);
+}
+
+.remove-todo-btn {
+    border: none;
+    background-color: #b91c1c;
+    color: var(--clr-neutral-100);
+    padding: var(--fs-100) 0;
     border-radius: var(--fs-100);
 }
 
@@ -178,4 +202,11 @@ textarea {
     border-radius: var(--fs-100);
     border: none;
     border-bottom: 2px solid var(--clr-neutral-300);
+}
+
+#submitform {
+    border: none;
+    background-color:#0c4a6e;
+    font-weight: var(--fw-bold);
+    color: var(--clr-neutral-100);
 }

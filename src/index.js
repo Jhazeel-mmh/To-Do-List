@@ -18,10 +18,12 @@ const App = (function (DOM, StrgCtrl){
 
         if (!addTodoBtn) return;
 
-        addTodoBtn.addEventListener("click", formController);
+        addTodoBtn.addEventListener("click", () => { 
+            formController(); 
+        });
     };
 
-    const formController = (idOfTodo = undefined, todo = undefined) => {
+    const formController = (idOfTodo = false,todo = false) => {
         const form = $(".details-form");
         if (!form) DOM.displayFormOfTodo(todo);
         // blockClicksOutsideForm();
@@ -45,15 +47,14 @@ const App = (function (DOM, StrgCtrl){
         let form = $("#add-task-form");
         form.addEventListener("submit", event => {
             event.preventDefault()
-            addTodo();
-            StrgCtrl.removeTodo(id);
+            addTodo(id);
             DOM.removeClassFromNodes("clicked", $$(".section-option"));
             DOM.closeDetailsDiv();
             DOM.showTasks(StrgCtrl.todos);
         });
     };
 
-    const addTodo = () => {
+    const addTodo = (id) => {
         let task = $("#todo-task")?.value || ""; // Encadenamiento opcional para evitar errores
         let done = $("#todo-check")?.checked || false; // Booleano para checkbox
         let notes = $("#todo-notes")?.value || "";
@@ -63,6 +64,17 @@ const App = (function (DOM, StrgCtrl){
 
 
         if (!task) return;
+
+        if(id){
+           StrgCtrl.todos[id].task = task;
+           StrgCtrl.todos[id].done = done;
+           StrgCtrl.todos[id].notes = notes;
+           StrgCtrl.todos[id].priority = priority;
+           StrgCtrl.todos[id].date = date;
+           StrgCtrl.todos[id].category = category;
+           console.log(StrgCtrl.todos);
+           return;
+        }
         
         StrgCtrl.addTodo(createTodo(task, done, notes, priority, date, category));
         console.log(StrgCtrl.todos);
