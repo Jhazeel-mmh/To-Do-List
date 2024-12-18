@@ -81,17 +81,6 @@ const App = (function (DOM, StrgCtrl){
         ;
     };
 
-    /*
-    const blockClicksOutsideForm = () => {
-        let form = $("#details-form");
-        document.body.addEventListener("click", event => {
-            if(!form.contains(event.target)){
-                event.stopPropagation();
-                event.preventDefault();
-            }
-        });
-    };*/
-
     const filterTodosHandler = () => {
         const section = $(".main-sections");
         const options = $$(".section-option");
@@ -138,7 +127,32 @@ const App = (function (DOM, StrgCtrl){
         });
     };
 
+    const displaySearchForTodo = () => {
+        const search = $(".search");
+        search.addEventListener("click", (e) => {
+            if (e.target.classList.contains("clickable")){
+                DOM.searchInput();
+                search.classList.remove("transform");
+                search.classList.remove("clickable");
 
+                let cancelBtn = $("#cancel-search-query");
+                let searchInput = $("#search-query"); 
+
+                cancelBtn.addEventListener("click", () => {
+                    search.innerHTML = DOM.searchInputDefaultHTMLContent();
+                    search.classList.add("transform");
+                    search.classList.add("clickable");
+                });
+        
+                searchInput.addEventListener("input", (e) => {
+                    DOM.showTasks(StrgCtrl.filterTodosThatstartsWith(searchInput.value));
+                    DOM.removeClassFromNodes("clicked", $$(".section-option"));
+                });
+            }
+        });
+    };
+
+    displaySearchForTodo();
     updateStatusOfTheTodos();
     filterTodosHandler();
     addEventListenerToBtnAdd();

@@ -53,6 +53,36 @@ svg {
     font-size: var(--fs-300);
 }
 
+.search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: relative;
+}
+
+#search-query {
+    height: 4rem;
+    padding-left: 1rem;
+}
+
+#search-query:focus {
+    outline: none;
+}
+
+#cancel-search-query {
+    position: absolute;
+    left: 85%;
+    cursor: pointer;
+    font-weight: var(--fw-bold);
+}
+
 .main-nav, .category-nav {
     display: flex;
     flex-flow: column;
@@ -67,7 +97,7 @@ svg {
     transition: transform 1s ease;
 }
 
-.main-nav  p:hover {
+.transform:hover {
     transform: scale(1.1);
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4); /* Aumenta la sombra */
 }
@@ -108,14 +138,29 @@ svg {
     background-color: var(--clr-neutral-300);
 }
 
+.main-todo-board {
+    flex: 1;
+}
+
 .task-item {
     display: flex;
     gap: 1rem;
+    transition: transform 1s ease;
+    padding-left: 1rem;
+}
+
+.task-item:hover {
+    transform: scale(1.05);
+    box-shadow: 1px 1px 0.5rem;
 }
 
 .todo-checkbox {
     width: 1rem;
     height: auto;
+}
+
+.todo-item-todo {
+    cursor: pointer;
 }
 
 .backdrop {

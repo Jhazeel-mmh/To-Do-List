@@ -66,7 +66,9 @@ class StorageController{
         return this.todos.filter(todo => todo.done === true);
     }
 
-
+    filterTodosThatstartsWith(value){
+        return this.todos.filter(todo => todo.task.startsWith(value));
+    }
 }
 
 export { StorageController };
