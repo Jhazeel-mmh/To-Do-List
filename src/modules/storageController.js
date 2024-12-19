@@ -67,7 +67,7 @@ class StorageController{
     }
 
     filterTodosThatstartsWith(value){
-        return this.todos.filter(todo => todo.task.startsWith(value));
+        return this.todos.filter(todo => todo.task.includes(value));
     }
 
     getTodosOfToday(){
