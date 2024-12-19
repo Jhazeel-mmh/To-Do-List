@@ -69,6 +69,35 @@ class StorageController{
     filterTodosThatstartsWith(value){
         return this.todos.filter(todo => todo.task.startsWith(value));
     }
+
+    getTodosOfToday(){
+        return this.todos.filter(todo => {
+            let todayDate = new Date();
+            let todoDate = new Date(todo.date)
+            if(isNaN(todoDate.getTime())) return false;
+            return (
+                todoDate.getFullYear() === todayDate.getFullYear() &&
+                todoDate.getMonth() === todayDate.getMonth() &&
+                todoDate.getDate() === todayDate.getDate()
+            );
+        });
+    }
+
+    getTodosOfTheWeek(){
+        return this.todos.filter(todo => {
+            let endDateWeek = new Date();
+            let startDateWeek = new Date();
+            let todoDate = new Date(todo.date)
+
+            if(isNaN(todoDate.getTime())) return false;
+            endDateWeek.setDate(endDateWeek.getDate() + 7);
+            return (todoDate >= startDateWeek && todoDate <= endDateWeek); 
+        });
+    }
+
+    getTodosOfCategory(category){
+        return this.todos.filter(todo => todo.category === category);
+    }
 }
 
 export { StorageController };

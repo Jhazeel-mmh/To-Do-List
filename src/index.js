@@ -10,8 +10,8 @@ import { $, $$} from "./modules/DOMManipulationFunctions";
 const App = (function (DOM, StrgCtrl){
 
     StrgCtrl.loadFromLocalStore();
+    DOM.displayCategorysNav();
     DOM.showTasks(StrgCtrl.todos);
-    
 
     const addEventListenerToBtnAdd = () => {
         let addTodoBtn = $(".add-task");
@@ -32,9 +32,10 @@ const App = (function (DOM, StrgCtrl){
     };
 
     const addEventListenerToRemoveTodo = (id) => { 
-        let btnClose = $(".remove-todo-btn");  
-        if (!btnClose) return;
-        btnClose.addEventListener("click", () => {
+        let btnRemove = $(".remove-todo-btn");  
+        if (!btnRemove) return;
+        btnRemove.addEventListener("click", () => {
+            categoryUpdate();
             StrgCtrl.removeTodo(id);
             DOM.removeClassFromNodes("clicked", $$(".section-option"));
             DOM.closeDetailsDiv();
@@ -47,6 +48,7 @@ const App = (function (DOM, StrgCtrl){
         let form = $("#add-task-form");
         form.addEventListener("submit", event => {
             event.preventDefault()
+            categoryUpdate();
             addTodo(id);
             DOM.removeClassFromNodes("clicked", $$(".section-option"));
             DOM.closeDetailsDiv();
@@ -152,6 +154,61 @@ const App = (function (DOM, StrgCtrl){
         });
     };
 
+    const filterTodosForDate = () => {
+        const todayBtn = $(".today");
+        const upcomingBtn = $(".upcoming");
+
+        todayBtn.addEventListener("click", () => {
+            DOM.showTasks(StrgCtrl.getTodosOfToday());
+            DOM.removeClassFromNodes("clicked", $$(".section-option"));
+        });
+
+        upcomingBtn.addEventListener("click", () => {
+            DOM.showTasks(StrgCtrl.getTodosOfTheWeek());
+            DOM.removeClassFromNodes("clicked", $$(".section-option"));
+        });
+    };
+
+    const categoryUpdate = () => {
+        DOM.updateCategorys(StrgCtrl.getCategorys());
+        DOM.displayCategorysNav();
+    };
+
+    const filterTodosForCategory = () => {
+        let categoryNodes = $$(".category-item");
+        categoryNodes.forEach(btn => {
+            btn.addEventListener("click", () => {
+                DOM.showTasks(StrgCtrl.getTodosOfCategory(btn.id));
+            });
+        });
+    };
+
+    const createDefaultTodos = () => {
+        let todayDate = new Date();
+        let tomorrowDate = new Date();
+        tomorrowDate.setDate(tomorrowDate.getDate() + 4);
+
+        StrgCtrl.addTodo(createTodo("This task is meant to doing it Today", false, "", "", todayDate, "Example Category"));
+        StrgCtrl.addTodo(createTodo("This task is meant for doing it in the upcoming days", false, "", "", tomorrowDate, "Example Category"));
+        StrgCtrl.addTodo(createTodo("This task is meant for doing it in the upcoming days 2", false, "", "", tomorrowDate, "Example Category"));
+        StrgCtrl.addTodo(createTodo("This task isn’t meant for doing it", true, "", "", tomorrowDate, "Example 2"));
+
+        localStorage.setItem("setDefaultTodos", "Done");
+        
+        DOM.displayCategorysNav();
+    };
+
+    
+    if (!localStorage.getItem("setDefaultTodos")){
+        createDefaultTodos();
+    }
+    
+    console.log(StrgCtrl.todos);
+    
+
+    DOM.showTasks(StrgCtrl.todos);
+    filterTodosForCategory();
+    filterTodosForDate();
     displaySearchForTodo();
     updateStatusOfTheTodos();
     filterTodosHandler();
